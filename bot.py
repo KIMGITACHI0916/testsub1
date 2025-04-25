@@ -1,11 +1,9 @@
-services:
-  - type: web
-    name: telegram-moderation-bot
-    env: python
-    plan: free
-    runtime: python
-    buildCommand: ""
-    startCommand: python main.py
-    envVars:
-      - key: BOT_TOKEN
-        value: 7786341898:AAHdPjculC44KfjYmVyjvbloEgkfaCmkGwE
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Hello! I'm alive.")
+
+app = ApplicationBuilder().token("7786341898:AAHdPjculC44KfjYmVyjvbloEgkfaCmkGwE").build()
+app.add_handler(CommandHandler("start", start))
+app.run_polling()
